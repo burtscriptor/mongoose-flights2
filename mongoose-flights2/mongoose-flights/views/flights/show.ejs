@@ -1,0 +1,49 @@
+<%- include('../partials/header') %>
+<section id="show-page">
+    <div>Airline:</div>
+    <div><%= flight.airline %></div>
+    <div>Airport:</div>
+    <div><%= flight.airport %></div>
+    <div>Flight Number:</div>
+    <div><%= flight.flightNo %></div>
+    <div>Departs:</div>
+    <div><%= flight.departs %></div>
+    <% if (ticket.length) { %>
+        <ul>
+            <% ticket.forEach(t => { %>
+                <li>Ticket - Seat: <%= t.seat %> Price: <%= t.price %></li>
+                
+            <% }) %>
+        </ul>
+           
+        <% } else { %>
+            <a href="/<%= flight._id %>/new/ticket"><input type="button" value="Add ticket"></a>
+        <% } %>    
+    <% if (flight.destinations.length) { %>
+        <ul>
+            <% flight.destinations.forEach(destination => { %>
+                <li>Destination: <%= destination.destination %></li>
+                <li>Arrival: <%= destination.arrival %></li>
+            <% }) %>
+        </ul>
+    
+    <% } else { %>
+        <div>
+            <form id="add-destination-arrival" action="/flights/<%= flight._id %>/flights" method="POST">
+                <label for="destination">Destination:</label>
+                <select id="destination" name="destination">
+                    <option value="SYD">SYD</option>
+                    <option value="CCH">CCH</option>
+                    <option value="DFW">DFW</option>
+                    <option value="LAX">LAX</option>
+                    <option value="SAN">SAN</option>
+                </select>
+                <label for="arrival">Arrival:</label>
+                <input type="datetime-local" id="arrival" name="arrival" value="2024-02-26T12:30"
+                                           min="2024-02-26T12:30" max="2030-02-26T12:30">
+                <input type="submit" value="Add destination-arrival">
+            </form>
+        </div>
+    <% } %>
+</section>
+<%- include('../partials/footer') %>
